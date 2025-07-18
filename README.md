@@ -40,88 +40,11 @@ EduStream offers a rich set of functionalities tailored for both teachers and st
       * Students receive an email notification when **new content (topic)** is added to a course they have already purchased.
       * Students receive an email notification when a **new course is designed by an author** whose other courses they have previously purchased.
 
-## Tech Stack
+-----
 
-The EduStream platform is built using the following technologies:
+### Project 1: API Usage and Functionality
 
-  * **Backend Framework:** Python (Django)
-  * **Frontend:** HTML, CSS (Bootstrap 5.3), JavaScript (jQuery)
-  * **Database:** SQLite3 (default for local development)
-  * **Payment Gateway:** PayPal (Sandbox API)
-  * **Email Service:** SMTP for sending email notifications (configured with Gmail in `settings.py`)
-
-## File Structure
-
-The project follows a standard Django project structure, organized into a main project directory (`EduStream`) and several Django applications (`core`, `teacher`, `student`, `static`, `templates`, `media`):
-
-```
-EduStream/
-├── EduStream/                  # Main Django project settings
-│   ├── __init__.py
-│   ├── settings.py             # Project configurations (database, static, media, PayPal, email)
-│   ├── urls.py                 # Main URL dispatcher
-│   └── wsgi.py
-├── core/                       # Core application for common functionalities (users, categories, courses, enrollments)
-│   ├── migrations/
-│   │   └── 0001_initial.py     # Database schema migrations
-│   ├── templatetags/
-│   │   ├── __init__.py
-│   │   └── custom_filters.py   # Custom Django template filters
-│   ├── __init__.py
-│   ├── admin.py                # Django Admin configurations for core models
-│   ├── app.py                  # App configuration
-│   ├── forms.py                # Forms for user signup and OTP verification
-│   ├── models.py               # Database models (User, Category, Course, CourseContent, Enrollment)
-│   ├── tests.py
-│   └── urls.py                 # URLs for authentication (signup, login, OTP, logout)
-│   └── views.py                # Views for authentication and core functionalities
-├── manage.py                   # Django's command-line utility
-├── media/                      # Directory for user-uploaded files (e.g., course files)
-├── static/                     # Static assets (CSS, JS, images)
-│   └── css/
-│       └── style.css           # Custom CSS styles
-├── student/                    # Student-specific application
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── tests.py
-│   ├── urls.py                 # URLs for student dashboard, course Browse, purchase, content access
-│   └── views.py                # Views handling student functionalities
-├── teacher/                    # Teacher-specific application
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py                # Forms for course and course content management
-│   ├── models.py
-│   ├── tests.py
-│   ├── urls.py                 # URLs for teacher dashboard, course CRUD, content management, student views
-│   └── views.py                # Views handling teacher functionalities
-└── templates/                  # Base directory for all HTML templates
-    ├── emails/                 # Email template
-    │   ├── new_course_by_author_notification.html
-    │   └── new_topic_notification.html
-    ├── registration/           # Authentication related templates
-    │   ├── login.html
-    │   ├── signup.html
-    │   └── verify_otp.html
-    ├── student/                # Student-specific templates
-    │   ├── content_detail.html
-    │   ├── course_content_access.html
-    │   ├── course_detail.html
-    │   ├── course_list.html
-    │   ├── course_purchase_confirm.html
-    │   └── dashboard.html
-    ├── teacher/                # Teacher-specific templates
-    │   ├── course_confirm_delete.html
-    │   ├── course_content_manage.html
-    │   ├── course_form.html
-    │   ├── course_students_view.html
-    │   └── dashboard.html
-    └── base.html               # Base template for consistent layout
-    └── home.html               # Homepage template
-```
+This project, "EduStream," serves as **Project 1** and provides a comprehensive set of APIs to power the online learning platform. Below are the key API endpoints (URLs) built to support all student and teacher operations described in the features above. These APIs handle all the core functionalities, from user authentication and course management to content access and payment processing.
 
 ## API Endpoints (URLs)
 
@@ -231,6 +154,91 @@ Here's a breakdown of the key API endpoints (URLs) and their purposes within the
       * **Purpose:** Displays a list of students enrolled in a specific course.
       * **Handled by:** `teacher.views.course_students_view`
       * **Template:** `templates/teacher/course_students_view.html`
+
+-----
+
+## Tech Stack
+
+The EduStream platform is built using the following technologies:
+
+  * **Backend Framework:** Python (Django)
+  * **Frontend:** HTML, CSS (Bootstrap 5.3), JavaScript (jQuery)
+  * **Database:** SQLite3 (default for local development)
+  * **Payment Gateway:** PayPal (Sandbox API)
+  * **Email Service:** SMTP for sending email notifications (configured with Gmail in `settings.py`)
+
+## File Structure
+
+The project follows a standard Django project structure, organized into a main project directory (`EduStream`) and several Django applications (`core`, `teacher`, `student`, `static`, `templates`, `media`):
+
+```
+EduStream/
+├── EduStream/                  # Main Django project settings
+│   ├── __init__.py
+│   ├── settings.py             # Project configurations (database, static, media, PayPal, email)
+│   ├── urls.py                 # Main URL dispatcher
+│   └── wsgi.py
+├── core/                       # Core application for common functionalities (users, categories, courses, enrollments)
+│   ├── migrations/
+│   │   └── 0001_initial.py     # Database schema migrations
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── custom_filters.py   # Custom Django template filters
+│   ├── __init__.py
+│   ├── admin.py                # Django Admin configurations for core models
+│   ├── app.py                  # App configuration
+│   ├── forms.py                # Forms for user signup and OTP verification
+│   ├── models.py               # Database models (User, Category, Course, CourseContent, Enrollment)
+│   ├── tests.py
+│   └── urls.py                 # URLs for authentication (signup, login, OTP, logout)
+│   └── views.py                # Views for authentication and core functionalities
+├── manage.py                   # Django's command-line utility
+├── media/                      # Directory for user-uploaded files (e.g., course files)
+├── static/                     # Static assets (CSS, JS, images)
+│   └── css/
+│       └── style.css           # Custom CSS styles
+├── student/                    # Student-specific application
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py                 # URLs for student dashboard, course Browse, purchase, content access
+│   └── views.py                # Views handling student functionalities
+├── teacher/                    # Teacher-specific application
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py                # Forms for course and course content management
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py                 # URLs for teacher dashboard, course CRUD, content management, student views
+│   └── views.py                # Views handling teacher functionalities
+└── templates/                  # Base directory for all HTML templates
+    ├── emails/                 # Email template
+    │   ├── new_course_by_author_notification.html
+    │   └── new_topic_notification.html
+    ├── registration/           # Authentication related templates
+    │   ├── login.html
+    │   ├── signup.html
+    │   └── verify_otp.html
+    ├── student/                # Student-specific templates
+    │   ├── content_detail.html
+    │   ├── course_content_access.html
+    │   ├── course_detail.html
+    │   ├── course_list.html
+    │   ├── course_purchase_confirm.html
+    │   └── dashboard.html
+    ├── teacher/                # Teacher-specific templates
+    │   ├── course_confirm_delete.html
+    │   ├── course_content_manage.html
+    │   ├── course_form.html
+    │   ├── course_students_view.html
+    │   └── dashboard.html
+    └── base.html               # Base template for consistent layout
+    └── home.html               # Homepage template
+```
 
 ## How to Run Locally
 
