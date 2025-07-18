@@ -39,7 +39,7 @@ EduStream offers a rich set of functionalities tailored for both teachers and st
   * **Email Notifications:**
       * Students receive an email notification when **new content (topic)** is added to a course they have already purchased.
       * Students receive an email notification when a **new course is designed by an author** whose other courses they have previously purchased.
-
+### You can see this feature output images in project output folder
 -----
 
 ### Project 1: API Usage and Functionality
