@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Access Content: {{ course.title }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">Course: "{{ course.title }}"</h2>
+<p class="lead">Welcome to your purchased course! Here you can access all the lessons and materials.</p>
+<h3 class="mt-4 mb-3">Course Content</h3>
+{% if contents %}
+<div class="list-group">
+{% for content in contents %}
+<a href="{% url 'view_content_detail' course.pk content.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2 p-3 shadow-sm rounded">
+<div>
+<h5 class="mb-1 text-primary">{{ content.order }}. {{ content.title }}</h5>
+<small class="text-muted">Content Type: <span class="fw-semibold">{{ content.get_content_type_display }}</span></small>
+</div>
+<button class="btn btn-sm btn-outline-info">View Content</button>
+</a>
+{% endfor %}
+</div>
+{% else %}
+<div class="alert alert-warning text-center py-4" role="alert">
+<h4 class="alert-heading">No Content Yet!</h4>
+<p>It looks like the instructor hasn't added any content to this course yet. Please check back later!</p>
+</div>
+{% endif %}
+<a href="{% url 'student_dashboard' %}" class="btn btn-secondary mt-3">Back to My Courses</a>
+{% endblock %}

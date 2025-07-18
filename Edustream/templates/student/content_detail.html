@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %}{{ content.title }} - {{ course.title }}{% endblock %}
+{% block content %}
+<h2 class="mb-2">{{ content.title }}</h2>
+<p class="lead text-muted">Part of: <a href="{% url 'course_content_access' course.pk %}" class="text-decoration-none text-info">{{ course.title }}</a></p>
+<div class="card shadow-lg p-4 mb-4">
+<div class="card-body">
+{% if content.content_type == 'text' %}
+<h4 class="card-title text-primary mb-3">Text Lesson</h4>
+<div class="card-text text-break">
+{{ content.text_content|linebreaksbr }}
+</div>
+{% elif content.content_type == 'video' %}
+<h4 class="card-title text-primary mb-3">Video Lesson</h4>
+{% if content.video_url %}
+<div class="ratio ratio-16x9 mb-3">
+<iframe width="560" height="315" src="{{ content.video_url|replace:'watch?v=,embed/' }}" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p class="card-text"><small class="text-muted">Original Video URL: <a href="{{ content.video_url }}" target="_blank">{{ content.video_url }}</a></small></p>
+{% else %}
+<div class="alert alert-warning" role="alert">
+No video link provided for this lesson.
+</div>
+{% endif %}
+{% elif content.content_type == 'file' %}
+<h4 class="card-title text-primary mb-3">Downloadable File</h4>
+{% if content.file %}
+<p class="card-text">Click the button below to download the associated file.</p>
+<a href="{{ content.file.url }}" class="btn btn-success btn-lg" download>
+<i class="bi bi-download me-2"></i> Download: {{ content.file.name|cut:"course_files/" }}
+</a>
+{% else %}
+<div class="alert alert-warning" role="alert">
+No file attached to this content item.
+</div>
+{% endif %}
+{% elif content.content_type == 'quiz' %}
+<h4 class="card-title text-primary mb-3">Quiz</h4>
+<div class="alert alert-info" role="alert">
+<h5 class="alert-heading">Quiz Functionality (Future Development)</h5>
+<p class="mb-0">This is a placeholder for an interactive quiz. Quiz questions and submission logic would be implemented here.</p>
+</div>
+{% else %}
+<div class="alert alert-danger" role="alert">
+Unknown content type for this lesson. Please contact support.
+</div>
+{% endif %}
+</div>
+</div>
+<a href="{% url 'course_content_access' course.pk %}" class="btn btn-secondary mt-3">Back to Course Content</a>
+{% endblock %}

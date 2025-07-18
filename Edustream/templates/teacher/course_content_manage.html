@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}Manage Content for {{ course.title }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">Manage Content for "{{ course.title }}"</h2>
+<p class="lead">Add, edit, or remove lessons, videos, files, and quizzes for this course.</p>
+<form method="post" enctype="multipart/form-data" id="content_formset">
+{% csrf_token %}
+{{ formset.management_form }}
+<div id="formset-container">
+{% for form in formset %}
+<div class="card mb-4 shadow-sm content-item" id="content-item-{{ forloop.counter0 }}">
+<div class="card-header bg-light d-flex justify-content-between align-items-center">
+<h5 class="mb-0">Content Item {{ forloop.counter }}</h5>
+{% if form.instance.pk %}<small class="text-muted">Existing Content</small>{% endif %}
+{% if formset.can_delete %}
+<div class="form-check">
+{{ form.DELETE }}
+<label class="form-check-label" for="{{ form.DELETE.id_for_label }}">Delete</label>
+</div>
+{% endif %}
+</div>
+<div class="card-body">
+{% for hidden_field in form.hidden_fields %}{{ hidden_field }}{% endfor %}
+{% for field in form.visible_fields %}
+<div class="mb-3">
+<label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+{% if field.name == 'content_type' %}
+{{ field|add_class:"form-select" }}
+{% elif field.name == 'file' %}
+{{ field|add_class:"form-control" }}
+{% if field.value %}
+<p class="mt-1"><small>Current file: <a href="{{ field.value.url }}" target="_blank">{{ field.value.name|cut:"course_files/" }}</a></small></p>
+{% endif %}
+{% else %}
+{{ field|add_class:"form-control" }}
+{% endif %}
+{% if field.help_text %}
+<div class="form-text text-muted">{{ field.help_text }}</div>
+{% endif %}
+{% for error in field.errors %}
+<div class="text-danger small mt-1">{{ error }}</div>
+{% endfor %}
+</div>
+{% endfor %}
+{% if form.non_field_errors %}
+<div class="alert alert-danger mt-3">
+{% for error in form.non_field_errors %}{{ error }}{% endfor %}
+</div>
+{% endif %}
+</div>
+</div>
+{% endfor %}
+</div>
+<button type="button" id="add-content-item" class="btn btn-info mb-4">Add More Content</button>
+<div class="d-flex justify-content-end gap-2 mt-4">
+<button type="submit" class="btn btn-primary btn-lg">Save Content Changes</button>
+<a href="{% url 'teacher_dashboard' %}" class="btn btn-secondary btn-lg">Back to Dashboard</a>
+</div>
+</form>
+{% endblock %}
+{% block extra_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){var form_idx=parseInt($('#id_contents-TOTAL_FORMS').val());$('#add-content-item').click(function(){var empty_form_html=$('#empty_form_template').html();var new_form=empty_form_html.replace(/__prefix__/g,form_idx);$('#formset-container').append(new_form);$('#id_contents-TOTAL_FORMS').val(form_idx+1);form_idx++;var orderField=$('#id_contents-'+(form_idx-1)+'-order');if(orderField.length){orderField.val(form_idx);}$('html,body').animate({scrollTop:$('#content-item-'+(form_idx-1)).offset().top},500);});});
+</script>
+<template id="empty_form_template">
+<div class="card mb-4 shadow-sm content-item" id="content-item-__prefix__">
+<div class="card-header bg-light d-flex justify-content-between align-items-center">
+<h5 class="mb-0">New Content Item</h5>
+<div class="form-check">
+<input type="checkbox" name="contents-__prefix__-DELETE" id="id_contents-__prefix__-DELETE" class="form-check-input">
+<label class="form-check-label" for="id_contents-__prefix__-DELETE">Delete</label>
+</div>
+</div>
+<div class="card-body">
+<input type="hidden" name="contents-__prefix__-id" id="id_contents-__prefix__-id">
+<input type="hidden" name="contents-__prefix__-course" value="{{ course.pk }}" id="id_contents-__prefix__-course">
+<div class="mb-3">
+<label for="id_contents-__prefix__-title" class="form-label">Content Title</label>
+<input type="text" name="contents-__prefix__-title" placeholder="Content Title" id="id_contents-__prefix__-title">
+</div>
+<div class="mb-3">
+<label for="id_contents-__prefix__-content_type" class="form-label">Type</label>
+<select name="contents-__prefix__-content_type" id="id_contents-__prefix__-content_type">
+<option value="text">Text Lesson</option>
+<option value="video">Video Link</option>
+<option value="file">Downloadable File</option>
+<option value="quiz">Quiz</option>
+</select>
+</div>
+<div class="mb-3">
+<label for="id_contents-__prefix__-text_content" class="form-label">Text Content</label>
+<textarea type="text" name="contents-__prefix__-text_content" rows="3" placeholder="Enter text content here..." id="id_contents-__prefix__-text_content"></textarea>
+</div>
+<div class="mb-3">
+<label for="id_contents-__prefix__-video_url" class="form-label">Video URL</label>
+<input type="url" name="contents-__prefix__-video_url" placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="id_contents-__prefix__-video_url">
+</div>
+<div class="mb-3">
+<label for="id_contents-__prefix__-file" class="form-label">Downloadable File</label>
+<input type="file" name="contents-__prefix__-file" id="id_contents-__prefix__-file">
+</div>
+<div class="mb-3">
+<label for="id_contents-__prefix__-order" class="form-label">Display Order</label>
+<input type="number" name="contents-__prefix__-order" placeholder="Order" id="id_contents-__prefix__-order">
+</div>
+</div>
+</div>
+</template>
+{% endblock %}

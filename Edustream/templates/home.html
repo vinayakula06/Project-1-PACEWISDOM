@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<div class="jumbotron text-center bg-light p-5 rounded-3">
+<h1 class="display-4">Welcome to EduStream!</h1>
+<p class="lead">Your ultimate online learning platform. Discover, learn, and grow with our diverse courses.</p>
+<hr class="my-4">
+<p>Sign up as a student to explore a world of knowledge or as a teacher to share your expertise.</p>
+<p class="lead">
+<a class="btn btn-primary btn-lg me-2" href="{% url 'signup' %}" role="button">Sign Up Now</a>
+<a class="btn btn-secondary btn-lg" href="{% url 'login' %}" role="button">Log In</a>
+</p>
+</div>
+<div class="row mt-5">
+<div class="col-md-6">
+<div class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="card-title text-primary">For Students</h2>
+<p class="card-text">Dive into a vast collection of courses designed by experts. Enjoy secure course purchases, seamless content access, and track your learning progress.</p>
+<p><a href="{% url 'course_list' %}" class="btn btn-info">Explore Courses</a></p>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="card-title text-success">For Teachers</h2>
+<p class="card-text">Empower learners worldwide by creating and managing your courses with ease. Upload diverse content, monitor student enrollments, and build your teaching brand.</p>
+<p><a href="{% url 'teacher_dashboard' %}" class="btn btn-success">Start Teaching</a></p>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

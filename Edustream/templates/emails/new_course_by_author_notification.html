@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Course by an Instructor You Follow on EduStream!</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; }
+        .header { background-color: #28a745; color: white; padding: 15px; text-align: center; border-radius: 8px 8px 0 0; }
+        .content { padding: 20px 0; }
+        .button { display: inline-block; background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        .footer { text-align: center; margin-top: 20px; font-size: 0.9em; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Exciting New Course Alert from EduStream!</h2>
+        </div>
+        <div class="content">
+            <p>Dear {{ student_name }},</p>
+            <p>We're thrilled to let you know that <strong>{{ author_name }}</strong>, an instructor whose courses you've previously enjoyed on EduStream, has just published a brand new course!</p>
+            <h3 style="color: #28a745;">Course Title: "{{ course_title }}"</h3>
+            <p><strong>Description:</strong> {{ course_description|truncatechars:200 }}</p>
+            <p>Don't miss out on this new opportunity to learn from your favorite instructor. Click the button below to view the course details and enroll:</p>
+            <p style="text-align: center; margin: 30px 0;">
+                <a href="{{ protocol }}://{{ domain }}{% url 'course_detail' course_pk %}" class="button">View New Course Details</a>
+            </p>
+            <p>Happy learning!</p>
+            <p>Sincerely,<br>The EduStream Team</p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ "now"|date:"Y" }} EduStream. All rights reserved.</p>
+            <p>This is an automated email, please do not reply.</p>
+        </div>
+    </div>
+</body>
+</html>

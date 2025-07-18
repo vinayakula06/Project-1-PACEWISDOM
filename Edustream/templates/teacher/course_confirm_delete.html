@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Delete Course{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="alert alert-danger text-center shadow-lg" role="alert">
+<h4 class="alert-heading mb-3">Confirm Deletion</h4>
+<p>You are about to permanently delete the course:</p>
+<h5 class="mb-3 fw-bold">"{{ course.title }}"</h5>
+<p class="mb-4">This action cannot be undone and all associated content and enrollments will be lost.</p>
+<hr>
+<form method="post" class="d-flex justify-content-center gap-3">
+{% csrf_token %}
+<button type="submit" class="btn btn-danger btn-lg">Yes, Delete This Course</button>
+<a href="{% url 'teacher_dashboard' %}" class="btn btn-secondary btn-lg">Cancel</a>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}
