@@ -4,7 +4,7 @@ register = template.Library()
 @register.filter
 def replace(value, arg):
     if isinstance(value, str) and isinstance(arg, str) and ',' in arg:
-        old, new = arg.split(',', 1) # Split only on the first comma
+        old, new = arg.split(',', 1) 
         return value.replace(old, new)
     return value
 
