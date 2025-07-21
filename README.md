@@ -339,4 +339,3 @@ Follow these steps to set up and run the EduStream project on your local machine
     You can also access the Django admin panel at:
     `http://127.0.0.1:8000/admin/` (use the superuser credentials created earlier)
 
-Enjoy exploring EduStream\!
