@@ -9,16 +9,11 @@ from django.utils import timezone
 from django.conf import settings 
 import random
 import datetime
-
 from .forms import UserSignUpForm, EmailOTPForm
 from .models import User
-
 def generate_otp():
-    """Generates a 6-digit random OTP."""
     return str(random.randint(100000, 999999))
-
 def send_otp_email(email, otp):
-    """Sends the generated OTP to the user's email."""
     subject = 'Your EduStream Login OTP'
     message = (
         f'Dear User,\n\n'
@@ -43,7 +38,6 @@ def signup_view(request):
         form = UserSignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-
             messages.success(request, 'Account created successfully! Please log in.')
             return redirect('login')
         else:
@@ -51,16 +45,13 @@ def signup_view(request):
     else:
         form = UserSignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
-
 def login_view(request):
     """Handles user login and initiates 2FA OTP process."""
     if request.user.is_authenticated:
-        # Redirect authenticated users
         if request.user.user_type == 'teacher':
             return redirect('teacher_dashboard')
         else:
             return redirect('student_dashboard')
-
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -114,8 +105,8 @@ def verify_otp_view(request):
                     user.email_otp = None  # Clear OTP after successful verification
                     user.otp_created_at = None
                     user.save()
-                    login(request, user) # Log the user in
-                    del request.session['user_id_for_otp'] # Clear temporary session key
+                    login(request, user) 
+                    del request.session['user_id_for_otp']
                     messages.success(request, 'Login successful!')
                     if user.user_type == 'teacher':
                         return redirect('teacher_dashboard')
@@ -129,7 +120,6 @@ def verify_otp_view(request):
                     return redirect('login')
             else:
                 messages.error(request, 'Invalid OTP. Please try again.')
-        # If form is not valid, errors are displayed by the template
     else:
         form = EmailOTPForm()
 
